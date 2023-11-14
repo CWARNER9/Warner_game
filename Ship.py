@@ -10,7 +10,7 @@ class SpaceShip(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = screen.get_width()/2
         self.rect.y = 600
-        self.velocity = -1
+        self.velocity = 0
 
 
     def update(self):
