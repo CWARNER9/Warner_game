@@ -15,6 +15,11 @@ class SpaceShip(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.velocity
-
+        self.border()
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    def border(self, screen):
+        if self.rect.x > screen.get_width -100:
+            self.velocity = -0.1
+
