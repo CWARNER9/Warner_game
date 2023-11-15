@@ -19,7 +19,9 @@ class SpaceShip(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def border(self, screen):
-        if self.rect.x > screen.get_width -100:
-            self.velocity = -0.1
+    def border(self):
+        if self.rect.x > 940:
+            self.velocity = -0.2
+        if self.rect.x < 20:
+            self.velocity = 0.2
 
