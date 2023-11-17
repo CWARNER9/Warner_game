@@ -1,5 +1,5 @@
 import pygame
-import random
+
 
 class SpaceShip(pygame.sprite.Sprite):
     def __init__(self,screen):
