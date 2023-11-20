@@ -10,7 +10,7 @@ class Enemy(pygame.sprite.Sprite):
         self.x = random.randint(100, 900)
         self.rect.y = random.randint(100, 400)
         self.screen = screen
-        self.dead_timer = 0
+
     def update(self):
         self.x += self.speed
         if self.speed == 0:
