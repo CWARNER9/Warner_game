@@ -14,5 +14,5 @@ class Missile(pygame.sprite.Sprite):
         self.rect.y -= self.velocity
         if self.rect.y < 10:
             self.kill()
-        collision = pygame.sprite.spritecollide(self, )
+
 

@@ -42,7 +42,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
         # Code for red ship actions
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
@@ -85,7 +84,8 @@ while running:
                 your_ship.velocity = 0
             if your_ship.rect.x == 200:
                 your_ship.velocity = 0
-    # Calling the update functions from respective classes to make the game run how it is supposed to
+    collision = pygame.sprite.groupcollide(missile_group, enemy_group, True, True)
+    # Calling the update functions from respective classes to make the sprites update
     enemy_group.update()
     ship_group.update()
     missile_group.update()
