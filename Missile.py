@@ -10,11 +10,9 @@ class Missile(pygame.sprite.Sprite):
         self.rect.midtop = pos
         self.velocity = 8
         self.enemy_group = enemy_group
-        self.collision_radius = 30
     def update(self):
         self.rect.y -= self.velocity
         if self.rect.y < 10:
             self.kill()
-
-
+        collision = pygame.sprite.spritecollide(self, )
 

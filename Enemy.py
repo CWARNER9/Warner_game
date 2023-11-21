@@ -7,6 +7,8 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.transform.scale_by(self.image, 0.4)
         self.speed = random.randint(-5,5)
         self.rect = self.image.get_rect()
+        # Increases size of rect so hitbox is bigger
+        self.pseudo_rect = self.rect.inflate(10, 10)
         self.x = random.randint(100, 900)
         self.rect.y = random.randint(100, 400)
         self.screen = screen

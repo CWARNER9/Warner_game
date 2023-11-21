@@ -7,6 +7,8 @@ class VEnemy(pygame.sprite.Sprite):
         self.image = pygame.transform.scale_by(self.image, 0.3)
         self.speed = 3
         self.rect = self.image.get_rect()
+        # Increases size of rect so hitbox is bigger
+        self.pseudo_rect = self.rect.inflate(10, 10)
         self.rect.x = random.randint(100, 900)
         self.rect.y = random.randint(-5000, -500)
         self.screen = screen

@@ -42,7 +42,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        collision = pygame.sprite.groupcollide(enemy_group, missile_group, True, True)
+
         # Code for red ship actions
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
