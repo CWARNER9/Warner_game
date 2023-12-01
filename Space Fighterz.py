@@ -37,7 +37,7 @@ ship_group.add(my_ship, your_ship)
 # Creating menu text and background
 background = create_background(screen)
 menu_font = pygame.font.SysFont('freesansbold', 50)
-
+title_font = pygame.font.SysFont('freesansbold', 100)
 game_start = False
 running = True
 while running:
@@ -91,7 +91,7 @@ while running:
     collision = pygame.sprite.groupcollide(missile_group, enemy_group, True, True)
 
     # Blitting the background/menu so they show up as the game runs
-    screen.blit(background, (0, 0))
+    Title = title_font.render("SPACE FIGHTERZ", 1, (128, 0, 0))
     font_surface = menu_font.render('Single Player', 1, (0, 0, 255))
     font_surface2 = menu_font.render('Multiplayer', 1, (255, 0, 0))
     rect_1 = font_surface.get_rect()
@@ -100,8 +100,9 @@ while running:
     rect_1.centery = 315
     rect_2.centerx = 465
     rect_2.centery = 415
-    screen.blit(font_surface, (350, 300))
-    screen.blit(font_surface2, (375, 400))
+    screen.blit(Title, (340, 50))
+    screen.blit(font_surface, (360, 300))
+    screen.blit(font_surface2, (385, 400))
     mouse = pygame.mouse.get_pos()
     if rect_1.collidepoint(mouse):
         if pygame.mouse.get_pressed()[0]:
@@ -111,6 +112,7 @@ while running:
         if pygame.mouse.get_pressed()[0]:
             game_start = True
     if game_start == True:
+        screen.blit(background, (0, 0))
         enemy_group.update()
         ship_group.update()
         missile_group.update()
