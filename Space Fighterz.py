@@ -36,9 +36,9 @@ ship_group.add(my_ship, your_ship)
 
 # Creating menu text and background
 background = create_background(screen)
-menu_font = pygame.font.SysFont('freesansbold', 100)
+menu_font = pygame.font.SysFont('freesansbold', 50)
 
-
+game_start = False
 running = True
 while running:
     for event in pygame.event.get():
@@ -92,17 +92,34 @@ while running:
 
     # Blitting the background/menu so they show up as the game runs
     screen.blit(background, (0, 0))
-    font_surface = menu_font.render('START', 1, (0, 0, 255))
-    screen.blit(font_surface, (390, 300))
+    font_surface = menu_font.render('Single Player', 1, (0, 0, 255))
+    font_surface2 = menu_font.render('Multiplayer', 1, (255, 0, 0))
+    rect_1 = font_surface.get_rect()
+    rect_2 = font_surface2.get_rect()
+    rect_1.centerx = 445
+    rect_1.centery = 315
+    rect_2.centerx = 465
+    rect_2.centery = 415
+    screen.blit(font_surface, (350, 300))
+    screen.blit(font_surface2, (375, 400))
+    mouse = pygame.mouse.get_pos()
+    if rect_1.collidepoint(mouse):
+        if pygame.mouse.get_pressed()[0]:
+            your_ship.kill()
+            game_start = True
+    if rect_2.collidepoint(mouse):
+        if pygame.mouse.get_pressed()[0]:
+            game_start = True
+    if game_start == True:
+        enemy_group.update()
+        ship_group.update()
+        missile_group.update()
+        enemy_group.draw(screen)
+        ship_group.draw(screen)
+        missile_group.draw(screen)
     # calling update functions for each group
-    enemy_group.update()
-    ship_group.update()
-    missile_group.update()
 
     # Drawing the groups to the screen
-    ship_group.draw(screen)
-    enemy_group.draw(screen)
-    missile_group.draw(screen)
 
     # Run at 60 fps
     clock.tick(60)
