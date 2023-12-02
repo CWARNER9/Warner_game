@@ -8,6 +8,7 @@ from Missile import Missile
 from Ship2 import SpaceShip2
 from VEnemy import VEnemy
 from Menu_background import create_background
+from Laser import Laser
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -23,11 +24,12 @@ num_vert_enemy = 15
 # Calling the classes to define each ship
 your_ship = SpaceShip2(screen)
 my_ship = SpaceShip(screen)
-
+enemy = Enemy(screen)
 # Initializing groups
 ship_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
 missile_group = pygame.sprite.Group()
+laser_group = pygame.sprite.Group()
 
 # Adding sprites to their respective groups
 ship_group.add(my_ship, your_ship)
@@ -38,9 +40,17 @@ ship_group.add(my_ship, your_ship)
 background = create_background(screen)
 menu_font = pygame.font.SysFont('freesansbold', 50)
 title_font = pygame.font.SysFont('freesansbold', 100)
+# Add cool music
+music = pygame.mixer.music.load("Assets/Sounds/summervibe.mp3")
+pygame.mixer.music.play(4, True, 0)
 game_start = False
 running = True
 while running:
+    if len(laser_group) < 3:
+        for enemy in enemy_group:
+            number = randint(0,3)
+            if number == 1:
+                laser_group.add(Laser(enemy.rect.midbottom, SpaceShip))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -55,7 +65,7 @@ while running:
                 if my_ship.velocity == 0:
                     my_ship.velocity -=4
             if event.key == pygame.K_UP:
-                if len(missile_group) < 8:
+                if len(missile_group) < 6:
                     missile_group.add(Missile(my_ship.rect.midtop, enemy_group))
             if my_ship.velocity >= 4:
                 my_ship.velocity = 4
@@ -77,7 +87,7 @@ while running:
                 if your_ship.velocity == 0:
                     your_ship.velocity -=4
             if event.key == pygame.K_w:
-                if len(missile_group) < 8:
+                if len(missile_group) < 6:
                     missile_group.add(Missile(your_ship.rect.midtop, enemy_group))
             if your_ship.velocity >= 4:
                 your_ship.velocity = 4
@@ -87,6 +97,7 @@ while running:
                 your_ship.velocity = -0.5
             if your_ship.rect.x == 150:
                 your_ship.velocity = 0.5
+
     # Checking for collisions between the missiles and the enemies
     collision = pygame.sprite.groupcollide(missile_group, enemy_group, True, True)
 
@@ -115,12 +126,13 @@ while running:
     if game_start == True:
         screen.blit(background, (0, 0))
         enemy_group.update()
-        ship_group.update()
+        ship_group.update(enemy_group, laser_group, screen)
         missile_group.update()
+        laser_group.update()
         enemy_group.draw(screen)
         ship_group.draw(screen)
         missile_group.draw(screen)
-
+        laser_group.draw(screen)
 
     # Run at 60 fps
     clock.tick(60)
