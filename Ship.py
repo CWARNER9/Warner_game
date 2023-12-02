@@ -11,11 +11,21 @@ class SpaceShip(pygame.sprite.Sprite):
         self.rect.x = screen.get_width()/2
         self.rect.y = 600
         self.velocity = 0
+        self.dead_time = 0
 
 
     def update(self):
         self.rect.x += self.velocity
         self.border()
+        if self.dead_time and (pygame.time.get_ticks() - self.dead_time>1000):
+            self.image = pygame.image.load('Assets/Images/spaceShips_009.png')
+            self.image = pygame.transform.scale_by(self.image, 0.5)
+            self.image = pygame.transform.flip(self.image, False, True)
+            self.rect = self.image.get_rect()
+            self.rect.x = screen.get_width() / 2
+            self.rect.y = 600
+            self.velocity = 0
+            self.dead_time = 0
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
@@ -24,4 +34,9 @@ class SpaceShip(pygame.sprite.Sprite):
             self.velocity = -0.2
         if self.rect.x < 20:
             self.velocity = 0.2
+
+    def boom(self):
+        self.image = pygame.image.load('Assets/Images/explosion1.png')
+        self.dead_time = pygame.time.get_ticks()
+
 

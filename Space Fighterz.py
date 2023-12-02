@@ -100,9 +100,10 @@ while running:
     rect_1.centery = 315
     rect_2.centerx = 465
     rect_2.centery = 415
-    screen.blit(Title, (340, 50))
+    screen.blit(Title, (200, 50))
     screen.blit(font_surface, (360, 300))
     screen.blit(font_surface2, (385, 400))
+    # Menu actions
     mouse = pygame.mouse.get_pos()
     if rect_1.collidepoint(mouse):
         if pygame.mouse.get_pressed()[0]:
@@ -119,9 +120,7 @@ while running:
         enemy_group.draw(screen)
         ship_group.draw(screen)
         missile_group.draw(screen)
-    # calling update functions for each group
 
-    # Drawing the groups to the screen
 
     # Run at 60 fps
     clock.tick(60)

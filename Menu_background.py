@@ -1,7 +1,6 @@
 import pygame
 from random import randint
 
-
 def create_background(screen):
     WIDTH = 1000
     HEIGHT = 700
@@ -12,3 +11,11 @@ def create_background(screen):
     for r in range(num_rocks):
         background.blit(rock, (randint(0, WIDTH), randint(0, HEIGHT)))
     return background
+
+def lives(screen):
+    lives = 3
+
+
+
+def score(screen):
+    score = 0
