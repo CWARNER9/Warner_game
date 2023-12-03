@@ -12,10 +12,3 @@ def create_background(screen):
         background.blit(rock, (randint(0, WIDTH), randint(0, HEIGHT)))
     return background
 
-def lives(screen):
-    lives = 3
-
-
-
-def score(screen):
-    score = 0
