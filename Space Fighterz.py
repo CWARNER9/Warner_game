@@ -53,6 +53,7 @@ pygame.mixer.music.play(4, True, 0)
 game_start = False
 running = True
 while running:
+    # Enemies shoot
     if len(laser_group) < 2:
         for enemy in enemy_group:
             number = randint(0,5)
@@ -130,7 +131,7 @@ while running:
     if rect_2.collidepoint(mouse):
         if pygame.mouse.get_pressed()[0]:
             game_start = True
-
+    #Start the game if true
     if game_start == True:
         screen.blit(background, (0, 0))
         enemy_group.update()
@@ -141,6 +142,7 @@ while running:
         ship_group.draw(screen)
         missile_group.draw(screen)
         laser_group.draw(screen)
+    # if you die 3 times, its over
     if my_ship.lives ==  0:
         game_start = False
         screen.blit(background, (0, 0))
@@ -158,11 +160,13 @@ while running:
     if len(enemy_group) == 0:
         boss_group.update()
         boss_group.draw(screen)
+        # Boss shoots big laser
         if len(laser_group) < 2:
             for boss in boss_group:
                 number = randint(0, 10)
                 if number == 1:
                     laser_group.add(Biglaser(boss.rect.midbottom, SpaceShip))
+    # Hit the boss 40 times to kill it
     if pygame.sprite.groupcollide(missile_group, boss_group, True, False,):
         hits += 1
     if hits == 40:
