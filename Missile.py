@@ -15,4 +15,3 @@ class Missile(pygame.sprite.Sprite):
         if self.rect.y < 10:
             self.kill()
 
-

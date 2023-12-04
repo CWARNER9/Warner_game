@@ -11,6 +11,7 @@ class SpaceShip2(pygame.sprite.Sprite):
         self.rect.y = 600
         self.velocity = 0
         self.dead_time = 0
+        self.lives = 3
 
     def update(self, enemy_group, laser_group, screen):
         self.rect.x += self.velocity
@@ -25,6 +26,8 @@ class SpaceShip2(pygame.sprite.Sprite):
             self.rect.y = 600
             self.velocity = 0
             self.dead_time = 0
+            self.lives -= 1
+            return self.lives
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 

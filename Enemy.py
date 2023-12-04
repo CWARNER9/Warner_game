@@ -20,7 +20,9 @@ class Enemy(pygame.sprite.Sprite):
             self.speed = self.speed*-1
         if self.rect.x > 960:
             self.speed = self.speed*-1
-
+    def reset(self):
+        self.rect.x = random.randint(100, 900)
+        self.rect.y = random.randint(100, 400)
 
 
 

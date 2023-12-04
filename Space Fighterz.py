@@ -10,6 +10,7 @@ from VEnemy import VEnemy
 from Menu_background import create_background
 from Laser import Laser
 from Boss import Boss
+from Biglaser import Biglaser
 pygame.init()
 clock = pygame.time.Clock()
 
@@ -18,15 +19,14 @@ WIDTH = 1000
 HEIGHT = 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-# Initializing the number of enemies/lives
+# Initializing the number of enemies
 num_lat_enemy = 8
 num_vert_enemy = 15
-lives = 3
-your_lives = 3
 # Calling the classes to define each ship
 your_ship = SpaceShip2(screen)
-my_ship = SpaceShip(screen, lives)
+my_ship = SpaceShip(screen)
 enemy = Enemy(screen)
+venemy = VEnemy(screen)
 boss = Boss(screen)
 # Initializing groups
 ship_group = pygame.sprite.Group()
@@ -48,9 +48,8 @@ menu_font = pygame.font.SysFont('freesansbold', 50)
 title_font = pygame.font.SysFont('freesansbold', 100)
 # Add cool music
 music = pygame.mixer.music.load("Assets/Sounds/summervibe.mp3")
+hits = 0
 pygame.mixer.music.play(4, True, 0)
-live_1 = False
-live_2 = False
 game_start = False
 running = True
 while running:
@@ -105,7 +104,7 @@ while running:
                 your_ship.velocity = -0.5
             if your_ship.rect.x == 150:
                 your_ship.velocity = 0.5
-    print(len(enemy_group))
+
     # Checking for collisions between the missiles and the enemies
     collision = pygame.sprite.groupcollide(missile_group, enemy_group, True, True)
     # Blitting the background/menu so they show up as the game runs
@@ -127,11 +126,11 @@ while running:
         if pygame.mouse.get_pressed()[0]:
             your_ship.kill()
             game_start = True
-            live_1 = True
+
     if rect_2.collidepoint(mouse):
         if pygame.mouse.get_pressed()[0]:
             game_start = True
-            live_2 = True
+
     if game_start == True:
         screen.blit(background, (0, 0))
         enemy_group.update()
@@ -142,22 +141,38 @@ while running:
         ship_group.draw(screen)
         missile_group.draw(screen)
         laser_group.draw(screen)
-    # Depending on single or multiplayer, displays live count
-    if live_1 == True:
-        live_count = in_game_font.render(f"Lives: {lives}", 1, (255, 0, 0))
-        screen.blit(live_count, (10, 10))
-    if live_2 == True:
-        live_count = in_game_font.render(f"Lives: {lives}", 1, (255, 0, 0))
-        screen.blit(live_count, (10, 10))
-        live_count2 = in_game_font.render(f"Lives: {your_lives}", 1, (0, 0, 255))
-        screen.blit(live_count2, (10, 30))
+    if my_ship.lives ==  0:
+        game_start = False
+        screen.blit(background, (0, 0))
+        pygame.mixer.music.stop()
+        game_over = menu_font.render('Game Over :(', 1, (255, 0, 0))
+        screen.blit(game_over, (360, 350))
+    if your_ship.lives == 0:
+        game_start = False
+        screen.blit(background, (0, 0))
+        pygame.mixer.music.stop()
+        game_over = menu_font.render('Game Over :(', 1, (255, 0, 0))
+        restart = menu_font.render('restart', 1, (0, 0, 255))
+        screen.blit(game_over, (360, 350))
     # Brings out the boss
     if len(enemy_group) == 0:
         boss_group.update()
         boss_group.draw(screen)
-        if boss.speed > 0:
-            len(missile_group) == 5
-
+        if len(laser_group) < 2:
+            for boss in boss_group:
+                number = randint(0, 10)
+                if number == 1:
+                    laser_group.add(Biglaser(boss.rect.midbottom, SpaceShip))
+    if pygame.sprite.groupcollide(missile_group, boss_group, True, False,):
+        hits += 1
+    if hits == 40:
+        boss.kill()
+    if len(boss_group) == 0:
+        game_start = False
+        screen.blit(background, (0, 0))
+        pygame.mixer.music.stop()
+        Win = title_font.render('WINNER!!', 1, (0, 255, 0))
+        screen.blit(Win, (340, 320))
     # Run at 60 fps
     clock.tick(60)
     pygame.display.flip()

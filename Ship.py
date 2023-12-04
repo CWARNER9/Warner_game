@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 
 class SpaceShip(pygame.sprite.Sprite):
-    def __init__(self,screen,lives):
+    def __init__(self,screen):
         super().__init__()
         self.image = pygame.image.load('Assets/Images/spaceShips_009.png')
         self.image = pygame.transform.scale_by(self.image, 0.5)
@@ -12,7 +12,7 @@ class SpaceShip(pygame.sprite.Sprite):
         self.rect.y = 600
         self.velocity = 0
         self.dead_time = 0
-        self.lives = lives
+        self.lives = 3
 
     def update(self, enemy_group, laser_group, screen):
         self.rect.x += self.velocity
@@ -28,6 +28,8 @@ class SpaceShip(pygame.sprite.Sprite):
             self.rect.y = 600
             self.velocity = 0
             self.dead_time = 0
+            self.lives -= 1
+            return self.lives
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -42,8 +44,6 @@ class SpaceShip(pygame.sprite.Sprite):
         self.image = pygame.image.load('Assets/Images/explosion1.png')
         self.dead_time = pygame.time.get_ticks()
         self.velocity = 0
-        self.lives -= 1
-        return self.lives
     def crash(self, enemy_group):
          crash_sound = pygame.mixer.Sound("Assets/Sounds/mixkit-8-bit-bomb-explosion-2811.wav")
          hit = pygame.sprite.spritecollideany(self, enemy_group)
