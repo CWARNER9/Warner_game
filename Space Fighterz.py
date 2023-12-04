@@ -20,8 +20,8 @@ HEIGHT = 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 # Initializing the number of enemies
-num_lat_enemy = 8
-num_vert_enemy = 15
+num_lat_enemy = 10
+num_vert_enemy = 20
 # Calling the classes to define each ship
 your_ship = SpaceShip2(screen)
 my_ship = SpaceShip(screen)

@@ -4,7 +4,7 @@ class Boss(pygame.sprite.Sprite):
     def __init__(self,screen):
         super().__init__()
         self.image = pygame.image.load('Assets/Images/enemyBlack5.png')
-        self.image = pygame.transform.scale_by(self.image, 3.3)
+        self.image = pygame.transform.scale_by(self.image, 3.)
         self.speed = 1
         self.rect = self.image.get_rect()
         self.rect.x = 300
